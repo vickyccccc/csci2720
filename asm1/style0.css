@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+    color: floralwhite;
+    margin: 1% 2%;
+    text-align: left;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+header,
+nav {
+    padding: 1% 2%;
+    text-align: center;
+    margin-bottom: 1%;
+    background-image: url('https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp');
+    height: auto;
+}
+
+/* nav {
+    background-image: url('https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp');
+    height: auto;
+} */
+
+section {
+    padding: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+section:nth-child(odd) {
+    background-color: #212529;
+}
+
+
+section:nth-child(even) {
+    background-color: #2e3235;
+}
+
+#celebrity img {
+    max-width: 200px;
+    height: auto;
+    float: right;
+}
