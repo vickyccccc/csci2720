@@ -15,6 +15,9 @@
     <!-- my css -->
     <link rel="stylesheet" href="./style0.css">
 
+    <!-- my js -->
+    <script src="./script.js"></script>
+
     <title>Celebrity</title>
 </head>
 
@@ -31,7 +34,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -48,6 +51,9 @@
                         <a class="nav-link" href="#biography">Biography</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#spotlight">Spotlight</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#topCitedPublications">Top Cited Publications</a>
                     </li>
                     <li class="nav-item">
@@ -56,35 +62,36 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#courses">Courses</a>
                     </li>
+                    <li class="nav-item">
+                        <button type="button" id="q3task0" onclick="q3task0()">Show</button>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <main>
+    <!-- <div id="q3buttons" style="visibility: hidden;"> -->
+    <div id="q3buttons" style="display: none;">
+        <button type="button" id="q3task1" onclick="q3task1()">Task 1</button>
+        <button type="button" id="q3task2" onclick="q3task2()">Task 2</button>
+        <button type="button" id="q3task3" onclick="q3task3()">Task 3</button>
+    </div>
+
+    <main class=" row">
         <section id="celebrity" class="container">
-            <div class="row">
-                <div class="col-md-8 ">
+            <div class="row justify-content-evenly px-4">
+                <div class="col-md-8 columns">
                     <h3>Dr. Colin S. C. Tsang</h3>
                     <br>
                     <p>B.Sc. (HKBU), M.Phil. (HKBU), Ph.D. (HKUST) Lecturer</p>
                     <p>Image Analysis, Scientific Computing, PDE-constrained optimization</p>
                 </div>
-                <!-- <img src="./src/image.jpg" alt="Image of Dr. Colin Tsang" class="col-4 img-thumbnail"> -->
-                <img src="./src/image.jpg" alt="Image of Dr. Colin Tsang" class="col-6 col-md-4 img-thumbnail">
+                <img src="https://www.cse.cuhk.edu.hk/wp-content/uploads/elementor/thumbs/TSANG-Siu-Chung-q1upb67szo48ldn4eehajvrj1x8crxbqoiwsk04pq0.jpg"
+                    alt="Image of Dr. Colin Tsang" class="col-6 col-md-4 img-thumbnail columns">
             </div>
         </section>
 
-        <aside>
-            <h3>Contacts</h3>
-            <ul type="none">
-                <li><i class="bi bi-geo-alt"></i> SHB 130</li>
-                <li><i class="bi bi-telephone"></i> +852 3943 1283</li>
-                <li><i class="bi bi-envelope"></i> colintsang@cse.cuhk.edu.hk</li>
-            </ul>
-        </aside>
-
-        <section id="researchAreas">
+        <section id="researchAreas" class="col-md-8 columns">
             <h3>Research Areas</h3>
             <ul>
                 <li>Artificial Intelligence (Deep Learning, Medical Image Analysis)</li>
@@ -92,45 +99,78 @@
             </ul>
         </section>
 
+        <aside id="contacts" class="col-6 col-md-4 columns">
+            <h3>Contacts</h3>
+            <ul type="none">
+                <li><i class="bi bi-geo-alt"></i> SHB 130</li>
+                <li><i class="bi bi-telephone"></i> +852 3943 1283</li>
+                <li><i class="bi bi-envelope"></i> <a
+                        href="mailto:colintsang@cse.cuhk.edu.hk">colintsang@cse.cuhk.edu.hk</a></li>
+            </ul>
+        </aside>
+
         <section id="biography">
             <h3>Biography</h3>
-            <p>Dr Colin S. C. Tsang is a lecturer in the Department of Computer Science and Engineering at the Chinese
-                University of Hong Kong.
+            <p>Dr Colin S. C. Tsang is a lecturer in the Department of Computer Science and Engineering at the
+                Chinese
+                University of Hong Kong.</p>
+            <p>He earned his B.Sc. degree in Mathematical Sciences and his M.Phil. degree
+                in Applied Mathematics from the Hong Kong Baptist University. He obtained his Ph.D. in Computer
+                Science
+                and Engineering from the Hong Kong University of Science and Technology. His research interests lie
+                in
+                deep learning, image analysis, and scientific computing.</p>
+        </section>
 
-                He earned his B.Sc. degree in Mathematical Sciences and his M.Phil. degree in Applied Mathematics from
-                the Hong Kong Baptist University. He obtained his Ph.D. in Computer Science and Engineering from the
-                Hong Kong University of Science and Technology. His research interests lie in deep learning, image
-                analysis, and scientific computing.</p>
+        <section id="spotlight">
+            <h3>Spotlight</h3>
+            <ul>
+                <li>Teaching CSCI 2720</li>
+            </ul>
         </section>
 
         <section id="topCitedPublications">
             <h3>Top Cited Publications</h3>
             <ul>
                 <li>Tsang, C. S., Ngan, H. Y., & Pang, G. K.: <a
-                        href="https://www.sciencedirect.com/science/article/pii/S0031320315003532">Fabric inspection
-                        based on the Elo rating method. Pattern Recognition. Pattern Recognition</a>, 51, 2016, 378-394.
+                        href="https://www.sciencedirect.com/science/article/pii/S0031320315003532"
+                        target="_blank">Fabric inspection based on the Elo rating method. Pattern Recognition.
+                        Pattern
+                        Recognition</a>, 51, 2016, 378-394.
                 </li>
             </ul>
         </section>
 
         <section id="recentPublications">
             <h3>Recent Publications</h3>
-            <ol>
+            <ul>
                 <li>Tsang, C. S., Mok, T. C., & Chung, A. C.: <a
-                        href="https://link.springer.com/chapter/10.1007/978-3-031-16961-8_4">Joint Denoising and
-                        Super-Resolution for Fluorescence Microscopy Using Weakly-Supervised Deep Learning.</a>
-                    International Workshop on Medical Optical Imaging and Virtual Microscopy Image Analysis, 2022,
-                    32-41.</li>
-            </ol>
+                        href="https://link.springer.com/chapter/10.1007/978-3-031-16961-8_4" target="_blank">Joint
+                        Denoising and Super-Resolution for Fluorescence Microscopy Using Weakly-Supervised Deep
+                        Learning.</a> International Workshop on Medical Optical Imaging and Virtual Microscopy Image
+                    Analysis, 2022, 32-41.</li>
+            </ul>
         </section>
 
         <section id="courses">
             <h3>Courses</h3>
-            <ol>
-                <li>Course 1</li>
-                <li>Course 2</li>
-                <li>Course 3</li>
-            </ol>
+            <table>
+                <tr>
+                    <th>Course code</th>
+                    <th>Course name</th>
+                    <th>Units</th>
+                </tr>
+                <tr>
+                    <td>ENGG 1003</td>
+                    <td>Digital Literacy and Computational Thinking</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>CSCI 2720</td>
+                    <td>Building Web Applications</td>
+                    <td>3</td>
+                </tr>
+            </table>
         </section>
     </main>
 
