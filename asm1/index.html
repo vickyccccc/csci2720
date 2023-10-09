@@ -13,10 +13,338 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 
     <!-- my css -->
-    <link rel="stylesheet" href="./style0.css">
+    <!-- <link rel="stylesheet" href="./style0.css"> -->
+    <style>
+        body {
+            background-color: black;
+            color: floralwhite;
+            margin: 2%;
+            text-align: left;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        header,
+        nav {
+            padding: 1% 2%;
+            text-align: center;
+            margin-bottom: 1%;
+        }
+
+        header {
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp');
+            height: auto;
+        }
+
+        nav li {
+            border-right: 2px solid rgba(251, 243, 228, 0.281);
+        }
+
+        nav li:last-child {
+            border-right: none;
+        }
+
+        section {
+            padding: 1% 2%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
+
+        section {
+            background-color: #212529;
+        }
+
+        section:hover {
+            background-color: #2e3235;
+        }
+
+        #celebrity img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        #contacts a {
+            color: floralwhite;
+            background-color: transparent;
+            text-decoration: none;
+        }
+
+        section a:link,
+        section a:visited,
+        section a:hover {
+            color: floralwhite;
+            background-color: transparent;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        aside {
+            padding: 1% 2%;
+            text-align: left;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid rgba(251, 243, 228, 0.281);
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1%;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        tr:hover {
+            background-color: #373b3e;
+        }
+
+        #q3task0 {
+            background-color: transparent;
+            border: none;
+            color: rgba(255, 255, 255, .55);
+            padding: .5rem;
+        }
+
+        #q3buttons {
+            margin-bottom: 1%;
+            padding: .5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #q3buttons button {
+            border: 1px solid rgba(255, 255, 255, .55);
+            background-color: #212529;
+            color: rgba(255, 255, 255, .55);
+            /* padding: 1% 2%; */
+            margin-left: 1%;
+            margin-right: 1%;
+        }
+
+        h3 {
+            margin-bottom: 2%;
+        }
+
+        #q3task3pb {
+            margin-bottom: 1%;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+        }
+
+        footer {
+            padding: 1% 2%;
+            margin-bottom: 1%;
+            background-color: #212529;
+        }
+
+        .radioButtons div {
+            display: inline-block;
+            margin-right: 2%;
+        }
+
+        form input,
+        form textarea {
+            background-color: #2e3235 !important;
+            border: 1px solid rgba(251, 243, 228, 0.281) !important;
+            color: floralwhite !important;
+        }
+
+        input:focus,
+        textarea:focus {
+            background-color: #3b3f42 !important;
+        }
+    </style>
 
     <!-- my js -->
-    <script src="./script.js"></script>
+    <!-- <script src="myscriptfile.js"></script> -->
+    <script>
+        // control the show or hide of task n bottons
+        var showOrHide = 0;
+        function q3task0() {
+            if (showOrHide === 0) {
+                document.querySelector('#q3task0').innerText = 'Hide';
+                // document.getElementById('q3buttons').style.visibility = "visible";
+                document.getElementById('q3buttons').style.display = "";
+            } else {
+                document.querySelector('#q3task0').innerText = 'Show';
+                // document.getElementById('q3buttons').style.visibility = "hidden";
+                document.getElementById('q3buttons').style.display = "none";
+            }
+            showOrHide = !(showOrHide);
+        }
+
+        // control the align mode of columns
+        // left -> center -> right -> left -> ...
+        var alignMode = 0;
+        function q3task1() {
+            switch (alignMode) {
+                case (0):
+                    document.querySelectorAll('.columns').forEach(column => {
+                        column.style.textAlign = "center";
+                    });
+                    alignMode++;
+                    break;
+                case (1):
+                    document.querySelectorAll('.columns').forEach(column => {
+                        column.style.textAlign = "right";
+                    });
+                    alignMode++;
+                    break;
+                case (2):
+                    document.querySelectorAll('.columns').forEach(column => {
+                        column.style.textAlign = "left";
+                    });
+                    alignMode = 0;
+                    break;
+            }
+        }
+
+        // using prompt()
+        function q3task2() {
+            let userPrompt = prompt("Please enter a spotlight of the celebrity");
+            if (userPrompt != null && userPrompt.length != 0) {
+                const node = document.createElement("li");
+                const textnode = document.createTextNode(userPrompt);
+                node.appendChild(textnode);
+                document.getElementById("spotlightList").appendChild(node);
+            }
+        }
+
+        // control the show or hide of the progress bar
+        var showOrHide_t3 = 0;
+        function q3task3() {
+            if (showOrHide_t3 === 0) {
+                document.getElementById('q3task3pb').style.display = "";
+            } else {
+                document.getElementById('q3task3pb').style.display = "none";
+            }
+            showOrHide_t3 = !(showOrHide_t3);
+        }
+
+        // control the % progress of the progress bar
+        window.addEventListener('scroll', function () {
+            const scrollHeight = document.body.clientHeight - window.innerHeight;
+            const scrollPercentage = (window.scrollY / scrollHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercentage + '%';
+        })
+
+        // submit form (form validation and fetch)
+        function submitForm(e) {
+            e.preventDefault();
+
+            const email = document.querySelector('#email');
+            const comment = document.querySelector('#comment');
+            let color = document.querySelector('.radioButtons').querySelector('input[name="color"]:checked');
+
+            // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+$/;
+            const isValidEmail = emailRegex.test(email.value);
+
+            const isEmptyEmail = email.value.trim() === '';
+            const isEmptyComment = comment.value.trim() === '';
+
+            if (!isValidEmail || isEmptyComment || isEmptyEmail) {
+                if (isEmptyComment) {
+                    comment.classList.add('is-invalid');
+                } else {
+                    comment.classList.remove('is-invalid');
+                }
+
+                if (isEmptyEmail) {
+                    email.classList.add('is-invalid');
+                } else {
+                    email.classList.remove('is-invalid');
+                }
+
+                if (!isValidEmail) {
+                    email.classList.add('is-invalid');
+                } else {
+                    email.classList.remove('is-invalid');
+                }
+
+                return;
+            }
+
+            console.log("ok");
+
+            const body = {
+                "email": email.value,
+                "color": color.value,
+                "comment": comment.value
+            }
+
+            console.log(body);
+
+            fetch("./cm.json", {
+                method: "PUT",
+                // headers: {
+                //     "Content-Type": "application/json"
+                // },
+                body: JSON.stringify(body)
+                // body: body
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error("An error occurred while writing data to the JSON file:", error);
+                });
+
+            // loadComments();
+
+            // e.target.submit();
+            document.querySelector("form").reset();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadComments();
+        });
+
+        function loadComments() {
+            let comments;
+            fetch('./cm.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(comments => {
+                    // this.users = json;
+                    // console.log(json);
+                    comments.forEach(comment_n => {
+                        console.log(comment_n);
+                        let newComment = document.createElement("div");
+                        let element = '<div><svg height="60" width="60"><circle cx="30" cy="30" r="20"></svg></div><div><h5></h5><p></p></div>';
+                        newComment.innerHTML = element;
+
+                        newComment.className = "d-flex";
+                        newComment.querySelectorAll("div")[0].className = "flex-shrink-0";
+                        newComment.querySelectorAll("div")[1].className = "flex-grow-1";
+
+                        newComment.querySelector("h5").innerHTML = comment_n.email;
+                        newComment.querySelector("p").innerHTML = comment_n.comment;
+
+                        let color = comment_n.color;
+                        newComment.querySelector("circle").setAttribute("fill", color);
+
+                        document.querySelector("#commentList").appendChild(newComment);
+                    })
+                })
+                .catch(err => {
+                    console.log("Error: ", err);
+                })
+        }
+    </script>
 
     <title>Celebrity</title>
 </head>
@@ -54,13 +382,16 @@
                         <a class="nav-link" href="#spotlight">Spotlight</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#topCitedPublications">Top Cited Publications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#recentPublications">Recent Publications</a>
+                        <a class="nav-link" href="#publications">Publications</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#comments">Comment Corner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#footer">Add Your Comments</a>
                     </li>
                     <li class="nav-item">
                         <button type="button" id="q3task0" onclick="q3task0()">Show</button>
@@ -75,6 +406,12 @@
         <button type="button" id="q3task1" onclick="q3task1()">Task 1</button>
         <button type="button" id="q3task2" onclick="q3task2()">Task 2</button>
         <button type="button" id="q3task3" onclick="q3task3()">Task 3</button>
+    </div>
+
+    <div class="progress" id="q3task3pb" style="display: none;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            aria-label="A progress bar adjusts according to the scroll position" aria-valuenow="0" aria-valuemin="0"
+            aria-valuemax="100" style="width: 0%"></div>
     </div>
 
     <main class=" row">
@@ -124,24 +461,12 @@
 
         <section id="spotlight">
             <h3>Spotlight</h3>
-            <ul>
+            <ul id="spotlightList">
                 <li>Teaching CSCI 2720</li>
             </ul>
         </section>
 
-        <section id="topCitedPublications">
-            <h3>Top Cited Publications</h3>
-            <ul>
-                <li>Tsang, C. S., Ngan, H. Y., & Pang, G. K.: <a
-                        href="https://www.sciencedirect.com/science/article/pii/S0031320315003532"
-                        target="_blank">Fabric inspection based on the Elo rating method. Pattern Recognition.
-                        Pattern
-                        Recognition</a>, 51, 2016, 378-394.
-                </li>
-            </ul>
-        </section>
-
-        <section id="recentPublications">
+        <section id="publications">
             <h3>Recent Publications</h3>
             <ul>
                 <li>Tsang, C. S., Mok, T. C., & Chung, A. C.: <a
@@ -149,6 +474,12 @@
                         Denoising and Super-Resolution for Fluorescence Microscopy Using Weakly-Supervised Deep
                         Learning.</a> International Workshop on Medical Optical Imaging and Virtual Microscopy Image
                     Analysis, 2022, 32-41.</li>
+                <li>Tsang, C. S., Ngan, H. Y., & Pang, G. K.: <a
+                        href="https://www.sciencedirect.com/science/article/pii/S0031320315003532"
+                        target="_blank">Fabric inspection based on the Elo rating method. Pattern Recognition.
+                        Pattern
+                        Recognition</a>, 51, 2016, 378-394.
+                </li>
             </ul>
         </section>
 
@@ -172,7 +503,52 @@
                 </tr>
             </table>
         </section>
+
+        <section id="comments">
+            <h3>Comment Corner</h3>
+            <div id="commentList"></div>
+        </section>
     </main>
+
+    <footer id="footer">
+        <h3>Add Your Comments</h3>
+        <form id="commentForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control form-control-sm" id="email" autocomplete="off" required>
+            </div>
+            <hr>
+
+            <p>Color</p>
+            <div class="radioButtons">
+                <div>
+                    <input type="radio" name="color" id="red" value="red" checked>
+                    <label for="red">Red</label>
+                </div>
+                <div>
+                    <input type="radio" name="color" id="green" value="green">
+                    <label for="green">Green</label>
+                </div>
+                <div>
+                    <input type="radio" name="color" id="yellow" value="yellow">
+                    <label for="yellow">Yellow</label>
+                </div>
+                <div>
+                    <input type="radio" name="color" id="blue" value="blue">
+                    <label for="blue">Blue</label>
+                </div>
+            </div>
+            <hr>
+
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comment</label>
+                <textarea class="form-control" id="comment" rows="2" autocomplete="off" required></textarea>
+            </div>
+            <hr>
+
+            <input type="submit" value="submit" onclick="return submitForm(event)">
+        </form>
+    </footer>
 
 </body>
 
