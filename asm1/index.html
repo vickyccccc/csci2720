@@ -1,3 +1,23 @@
+<!-- 
+    Chan Yau Ki 1155157432
+-->
+<!-- 
+    I declare that the lab work here submitted is original
+    except for source material explicitly acknowledged,
+    and that the same or closely related material has not been
+    previously submitted for another course.
+    I also acknowledge that I am aware of University policy and
+    regulations on honesty in academic work, and of the disciplinary
+    guidelines and procedures applicable to breaches of such
+    policy and regulations, as contained in the website.
+    University Guideline on Academic Honesty:
+    https://www.cuhk.edu.hk/policy/academichonesty/
+    Student Name : Chan Yau Ki
+    Student ID : 1155157432
+    Class/Section : CSCI2720
+    Date : 10/10/2023
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,19 +82,23 @@
             height: auto;
         }
 
-        #contacts a {
+        a {
             color: floralwhite;
             background-color: transparent;
             text-decoration: none;
         }
 
-        section a:link,
-        section a:visited,
-        section a:hover {
+        a:link,
+        a:visited,
+        a:hover {
             color: floralwhite;
             background-color: transparent;
             text-decoration: none;
             font-weight: bold;
+        }
+
+        cite {
+            text-decoration: underline;
         }
 
         aside {
@@ -271,78 +295,98 @@
                 return;
             }
 
-            console.log("ok");
-
-            const body = {
+            // create an object for new comment
+            const newObject = {
                 "email": email.value,
                 "color": color.value,
                 "comment": comment.value
             }
 
-            console.log(body);
+            // append new comment to comment corner
+            appendComment(newObject);
 
-            fetch("./cm.json", {
-                method: "PUT",
-                // headers: {
-                //     "Content-Type": "application/json"
-                // },
-                body: JSON.stringify(body)
-                // body: body
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("HTTP error " + response.status);
-                    }
-                    return response.json();
-                })
-                .catch(error => {
-                    console.error("An error occurred while writing data to the JSON file:", error);
-                });
-
-            // loadComments();
-
-            // e.target.submit();
-            document.querySelector("form").reset();
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            loadComments();
-        });
-
-        function loadComments() {
-            let comments;
-            fetch('./cm.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error("HTTP error " + response.status);
-                    }
-                    return response.json();
-                })
+            // save new comment to the json file
+            loadComments()
                 .then(comments => {
-                    // this.users = json;
-                    // console.log(json);
-                    comments.forEach(comment_n => {
-                        console.log(comment_n);
-                        let newComment = document.createElement("div");
-                        let element = '<div><svg height="60" width="60"><circle cx="30" cy="30" r="20"></svg></div><div><h5></h5><p></p></div>';
-                        newComment.innerHTML = element;
-
-                        newComment.className = "d-flex";
-                        newComment.querySelectorAll("div")[0].className = "flex-shrink-0";
-                        newComment.querySelectorAll("div")[1].className = "flex-grow-1";
-
-                        newComment.querySelector("h5").innerHTML = comment_n.email;
-                        newComment.querySelector("p").innerHTML = comment_n.comment;
-
-                        let color = comment_n.color;
-                        newComment.querySelector("circle").setAttribute("fill", color);
-
-                        document.querySelector("#commentList").appendChild(newComment);
+                    let newArray = comments.concat(newObject);
+                    fetch("./comment_data.json", {
+                        method: "PUT",
+                        body: JSON.stringify(newArray)
                     })
                 })
                 .catch(err => {
-                    console.log("Error: ", err);
+                    console.log(err);
+                });
+
+            // blank the form
+            document.querySelector("form").reset();
+        }
+
+        // once refresh the page, load all comments and display them
+        document.addEventListener("DOMContentLoaded", function () {
+            loadComments()
+                .then(comments => {
+                    comments.forEach(comment => {
+                        appendComment(comment);
+                    });
                 })
+                .catch(err => {
+                    console.log(err);
+                });
+        });
+
+        // load comments from the json file
+        function loadComments() {
+            return fetch('./comment_data.json')
+                .then(response => {
+                    return response.json(); // .json() should be awaited
+                })
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        return data;
+                    } else {
+                        throw new Error("The JSON file does not exist, or the data is not stored in the array.");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    return initCommentsJson();
+                })
+        }
+
+        // append comments to comment corner
+        function appendComment(comment) {
+            let newComment = document.createElement("div");
+            let element = '<div><svg height="60" width="60"><circle cx="30" cy="30" r="20"></svg></div><div><h5></h5><p></p></div>';
+            newComment.innerHTML = element;
+
+            newComment.className = "d-flex";
+            newComment.querySelectorAll("div")[0].className = "flex-shrink-0";
+            newComment.querySelectorAll("div")[1].className = "flex-grow-1";
+
+            newComment.querySelector("h5").innerHTML = comment.email;
+            newComment.querySelector("p").innerHTML = comment.comment;
+
+            let color = comment.color;
+            newComment.querySelector("circle").setAttribute("fill", color);
+
+            document.querySelector("#commentList").appendChild(newComment);
+        }
+
+        // create and init the comment_data.json (the data must be store in array)
+        function initCommentsJson() {
+            const newObject = [
+                {
+                    "email": "admin@gmail.com",
+                    "color": "red",
+                    "comment": "Welcome to give comments here!"
+                }
+            ]
+            fetch("./comment_data.json", {
+                method: "PUT",
+                body: JSON.stringify(newObject)
+            })
+            return newObject;
         }
     </script>
 
@@ -358,6 +402,9 @@
     <header>
         <h1>Celebrity</h1>
         <p>This a web page to introduce a celebrity</p>
+        <p>More information can be found in
+            <cite><a href="https://www.cse.cuhk.edu.hk/people/faculty/colin-s-c-tsang/" target="_blank">here</a></cite>
+        </p>
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -420,7 +467,7 @@
                 <div class="col-md-8 columns">
                     <h3>Dr. Colin S. C. Tsang</h3>
                     <br>
-                    <p>B.Sc. (HKBU), M.Phil. (HKBU), Ph.D. (HKUST) Lecturer</p>
+                    <p><strong>B.Sc. (HKBU), M.Phil. (HKBU), Ph.D. (HKUST) Lecturer</strong></p>
                     <p>Image Analysis, Scientific Computing, PDE-constrained optimization</p>
                 </div>
                 <img src="https://www.cse.cuhk.edu.hk/wp-content/uploads/elementor/thumbs/TSANG-Siu-Chung-q1upb67szo48ldn4eehajvrj1x8crxbqoiwsk04pq0.jpg"
@@ -429,15 +476,15 @@
         </section>
 
         <section id="researchAreas" class="col-md-8 columns">
-            <h3>Research Areas</h3>
+            <h3>Research Areas <i class="bi bi-search"></i></i></h3>
             <ul>
-                <li>Artificial Intelligence (Deep Learning, Medical Image Analysis)</li>
-                <li>Computer Theory (Optimization)</li>
+                <li title="for Deep Learning and Medical Image Analysis">Artificial Intelligence</li>
+                <li title="for Optimization">Computer Theory</li>
             </ul>
         </section>
 
         <aside id="contacts" class="col-6 col-md-4 columns">
-            <h3>Contacts</h3>
+            <h3>Contacts <i class="bi bi-pin-map"></i></h3>
             <ul type="none">
                 <li><i class="bi bi-geo-alt"></i> SHB 130</li>
                 <li><i class="bi bi-telephone"></i> +852 3943 1283</li>
@@ -447,7 +494,7 @@
         </aside>
 
         <section id="biography">
-            <h3>Biography</h3>
+            <h3>Biography <i class="bi bi-person-lines-fill"></i></h3>
             <p>Dr Colin S. C. Tsang is a lecturer in the Department of Computer Science and Engineering at the
                 Chinese
                 University of Hong Kong.</p>
@@ -460,14 +507,14 @@
         </section>
 
         <section id="spotlight">
-            <h3>Spotlight</h3>
+            <h3>Spotlight <i class="bi bi-lightbulb"></i></h3>
             <ul id="spotlightList">
-                <li>Teaching CSCI 2720</li>
+                <li>Teaching CSCI2720</li>
             </ul>
         </section>
 
         <section id="publications">
-            <h3>Recent Publications</h3>
+            <h3>Recent Publications <i class="bi bi-paperclip"></i></i></h3>
             <ul>
                 <li>Tsang, C. S., Mok, T. C., & Chung, A. C.: <a
                         href="https://link.springer.com/chapter/10.1007/978-3-031-16961-8_4" target="_blank">Joint
@@ -484,7 +531,7 @@
         </section>
 
         <section id="courses">
-            <h3>Courses</h3>
+            <h3>Courses <i class="bi bi-book"></i></h3>
             <table>
                 <tr>
                     <th>Course code</th>
@@ -505,13 +552,13 @@
         </section>
 
         <section id="comments">
-            <h3>Comment Corner</h3>
+            <h3>Comment Corner <i class="bi bi-chat-text"></i></h3>
             <div id="commentList"></div>
         </section>
     </main>
 
     <footer id="footer">
-        <h3>Add Your Comments</h3>
+        <h3>Add Your Comments <i class="bi bi-node-plus"></i></h3>
         <form id="commentForm">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
@@ -522,6 +569,7 @@
             <p>Color</p>
             <div class="radioButtons">
                 <div>
+                    <!-- the default is red -->
                     <input type="radio" name="color" id="red" value="red" checked>
                     <label for="red">Red</label>
                 </div>
