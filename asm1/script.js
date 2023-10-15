@@ -121,6 +121,9 @@ function submitForm(e) {
             let newArray = comments.concat(newObject);
             fetch("./comment_data.json", {
                 method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify(newArray)
             })
         })
@@ -194,6 +197,9 @@ function initCommentsJson() {
     ]
     fetch("./comment_data.json", {
         method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(newObject)
     })
     return newObject;
