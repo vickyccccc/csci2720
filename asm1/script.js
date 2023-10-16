@@ -1,7 +1,25 @@
+// Chan Yau Ki 1155157432
+
+// I declare that the lab work here submitted is original
+// except for source material explicitly acknowledged,
+// and that the same or closely related material has not been
+// previously submitted for another course.
+// I also acknowledge that I am aware of University policy and
+// regulations on honesty in academic work, and of the disciplinary
+// guidelines and procedures applicable to breaches of such
+// policy and regulations, as contained in the website.
+// University Guideline on Academic Honesty:
+// https://www.cuhk.edu.hk/policy/academichonesty/
+// Student Name : Chan Yau Ki
+// Student ID : 1155157432
+// Class/Section : CSCI2720
+// Date : 10/10/2023
+
 // control the show or hide of task n bottons
-var showOrHide = 0;
+var showOrHide = false;
+
 function q3task0() {
-    if (showOrHide === 0) {
+    if (!showOrHide) {
         document.querySelector('#q3task0').innerText = 'Hide';
         // document.getElementById('q3buttons').style.visibility = "visible";
         document.getElementById('q3buttons').style.display = "";
@@ -51,9 +69,9 @@ function q3task2() {
 }
 
 // control the show or hide of the progress bar
-var showOrHide_t3 = 0;
+var showOrHide_t3 = false;
 function q3task3() {
-    if (showOrHide_t3 === 0) {
+    if (!showOrHide_t3) {
         document.getElementById('q3task3pb').style.display = "";
     } else {
         document.getElementById('q3task3pb').style.display = "none";
@@ -64,7 +82,8 @@ function q3task3() {
 // control the % progress of the progress bar
 window.addEventListener('scroll', function () {
     const scrollHeight = document.body.clientHeight - window.innerHeight;
-    const scrollPercentage = (window.scrollY / scrollHeight) * 100;
+    let scrollPercentage = ((window.scrollY < 0 ? 0 : window.scrollY) / scrollHeight) * 100;
+    scrollPercentage = scrollPercentage > 100 ? 100 : scrollPercentage;
     document.querySelector('.progress-bar').style.width = scrollPercentage + '%';
 })
 
