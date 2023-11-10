@@ -135,7 +135,7 @@ class Slideshow extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { currentImageID: 0, currentInterval: 1000, x: 0 };
+    this.state = { currentImageID: 0, currentInterval: 1500, x: 0 };
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleSlower = this.handleSlower.bind(this);
