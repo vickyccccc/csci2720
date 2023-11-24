@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Assingment 3</title>
+</head>
+
+<body>
+    <p>Problem 2: Get event by eventId</p>
+    <form id="myGetEventForm">
+        <label for="eventID">eventID:</label>
+        <input type="text" id="eventID" name="eventID">
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+
+    <p>Problem 3: POST to add event</p>
+    <form id="myForm">
+        <label for="name">name: </label>
+        <input type="text" id="name" name="name">
+        <br>
+        <label for="locId">loc: </label>
+        <input type="number" id="locId" name="locId">
+        <br>
+        <label for="quota">quota: </label>
+        <input type="number" id="quota" name="quota" min="1">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+
+    <p>Problem 4: DELETE event</p>
+    <form id="myDeleteForm">
+        <label for="eventID2">eventID:</label>
+        <input type="text" id="eventID2" name="eventID2">
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+
+    <p>Problem 5: Some more queries</p>
+    <p>Q1: <button id="myGetAllEventButton">Get All Events</button></p>
+    <p>Q2:
+    <form id="myGetLocationForm">
+        <label for="locationID">locationID:</label>
+        <input type="text" id="locationID" name="locationID">
+        <input type="submit" value="Submit">
+    </form>
+    </p>
+    <p>Q3: <button id="myGetAllLocationButton">Get All Locations</button></p>
+    <p>Q4:
+    <form id="myGetEventByQuotaForm">
+        <label for="number">number:</label>
+        <input type="number" id="number" name="number">
+        <input type="submit" value="Submit">
+    </form>
+    </p>
+
+    <hr>
+
+    <p>Problem 6: Updating with PUT</p>
+    <form id="getToUpdate">
+        <label for="eventID3">eventID:</label>
+        <input type="text" id="eventID3" name="eventID3">
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <div id="result"></div>
+    <br>
+    <form id="myUpdateForm">
+        <label for="name1">name:</label>
+        <input type="text" id="name1" name="name1">
+        <br>
+        <label for="loc">loc:</label>
+        <input type="number" id="loc" name="loc">
+        <br>
+        <label for="quota1">quota:</label>
+        <input type="number" id="quota1" name="quota1">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
+
+    <script>
+        document.getElementById('myGetEventForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let eventID = document.getElementById('eventID').value;
+
+            let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        });
+
+        document.getElementById('myForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let name = document.getElementById('name').value;
+            let locId = document.getElementById('locId').value;
+            let quota = document.getElementById('quota').value;
+            let data = {
+                name: name,
+                locId: Number(locId),
+                quota: Number(quota)
+            };
+
+            let response = await fetch('http://localhost:3000/ev', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        });
+
+        document.getElementById('myDeleteForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let eventID2 = document.getElementById('eventID2').value;
+
+            let response = await fetch(`http://localhost:3000/ev/${eventID2}`, {
+                method: 'DELETE',
+            });
+
+            if (response.status == 204) {
+                alert(`Event deleted`);
+                document.getElementById('myDeleteForm').reset();
+            } else {
+                let resultPage = await response.text();
+                document.open();
+                document.write(resultPage);
+                document.close();
+            }
+        });
+
+        document.getElementById('myGetAllEventButton').addEventListener('click', async (event) => {
+            let response = await fetch(`http://localhost:3000/ev`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        })
+
+        document.getElementById('myGetLocationForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let locationID = document.getElementById('locationID').value;
+
+            let response = await fetch(`http://localhost:3000/lo/${locationID}`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        });
+
+        document.getElementById('myGetAllLocationButton').addEventListener('click', async (event) => {
+            let response = await fetch(`http://localhost:3000/lo`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        })
+
+        document.getElementById('myGetEventByQuotaForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let number = document.getElementById('number').value;
+            let response = await fetch(`http://localhost:3000/ev?q=${encodeURIComponent(number)}`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            document.open();
+            document.write(resultPage);
+            document.close();
+        });
+
+        document.getElementById('getToUpdate').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let eventID = document.getElementById('eventID3').value;
+
+            let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
+                method: 'GET',
+            });
+
+            let resultPage = await response.text();
+            if (response.status == 404) {
+                document.open();
+                document.write(resultPage);
+                document.close();
+            } else {
+                document.getElementById('result').innerHTML = `<p>` + resultPage + `</p>`;
+            }
+        })
+
+        document.getElementById('myUpdateForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            let eventID = document.getElementById('eventID3').value;
+            let name = document.getElementById('name1').value;
+            let loc = document.getElementById('loc').value;
+            let quota = document.getElementById('quota1').value;
+
+            let data = {};
+            if (name) data.name = name;
+            if (loc) data.loc = Number(loc);
+            if (quota) data.quota = Number(quota);
+            console.log(data);
+
+            let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            let resultPage = await response.text();
+            console.log(resultPage);
+            document.open();
+            document.write(resultPage);
+            document.close();
+        })
+
+    </script>
+</body>
+
+</html>
