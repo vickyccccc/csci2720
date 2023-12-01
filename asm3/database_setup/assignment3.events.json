@@ -1,10 +1,12 @@
 [{
   "_id": {
-    "$oid": "6560b7fcb5d2b91a93963998"
+    "$oid": "6569a31cd81e115696311b87"
   },
   "eventId": 1,
-  "name": "CSCI2720",
-  "loc": 1,
-  "quota": 200,
+  "name": "testing1",
+  "loc": {
+    "$oid": "655f79faf5c6132e7cee51a3"
+  },
+  "quota": 100,
   "__v": 0
 }]
