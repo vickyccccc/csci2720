@@ -47,7 +47,8 @@ db.once('open', function () {
             required: true,
         },
         loc: {
-            type: Schema.Types.ObjectId,
+            // type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: "Location",
         },
         quota: {
@@ -344,35 +345,68 @@ db.once('open', function () {
     // ! Problem 6: Updating with PUT
     app.put('/ev/:eventID', (req, res) => {
         console.log(req.body)
-        Location.findOne({ locId: req.body.loc })
-            .then((locationData) => {
-                if (!locationData) {
-                    res.status(404).type('text/plain').send(`Location not found`);
-                } else {
-                    req.body.loc = locationData._id;
-                    Event.findOneAndUpdate({ eventId: { $eq: req.params.eventID } }, { $set: req.body }, { new: true })
-                        .then((data) => {
-                            let msg = `{<br>
-                            "eventId": ${data.eventId},<br>
-                            "name": "${data.name}",<br>
-                            "loc":<br>
-                            {<br>
-                            "locId": ${locationData.locId},<br>
-                            "name": "${locationData.name}"<br>
-                            },<br>
-                            "quota": ${data.quota}<br>
-                            }`
-                            res.status(200).type('text/plain').send(msg);
-                        })
-                        .catch((err) => {
-                            res.status(500).type('text/plain').send(err);
-                        })
+        req.body.loc
+            ? Location.findOne({ locId: req.body.loc })
+                .then((locationData) => {
+                    if (!locationData) {
+                        res.status(404).type('text/plain').send(`Location not found`);
+                    } else {
+                        req.body.loc = locationData._id;
+                        Event.findOneAndUpdate({ eventId: { $eq: req.params.eventID } }, { $set: req.body }, { new: true })
+                            .then((data) => {
+                                let msg = `{<br>
+                                        "eventId": ${data.eventId},<br>
+                                        "name": "${data.name}",<br>
+                                        "loc":<br>
+                                        {<br>
+                                        "locId": ${locationData.locId},<br>
+                                        "name": "${locationData.name}"<br>
+                                        },<br>
+                                        "quota": ${data.quota}<br>
+                                        }`
+                                res.status(200).type('text/plain').send(msg);
+                            })
+                            .catch((err) => {
+                                res.status(500).type('text/plain').send(err);
+                            })
 
-                }
-            })
-            .catch((err) => {
-                res.status(500).type('text/plain').send(err);
-            })
+                    }
+                })
+                .catch((err) => {
+                    res.status(500).type('text/plain').send(err);
+                })
+            : Event.findOneAndUpdate({ eventId: { $eq: req.params.eventID } }, { $set: req.body }, { new: true })
+                .then((data) => {
+                    if (!data)
+                        res.status(404).type('text/plain').send(`Event not found`);
+                    else {
+                        Location.findById(data.loc)
+                            .then((locationData) => {
+                                if (!locationData) {
+                                    res.status(404).type('text/plain').send(`Location not found`);
+                                } else {
+                                    let msg = `{<br>
+                                            "eventId": ${data.eventId},<br>
+                                            "name": "${data.name}",<br>
+                                            "loc":<br>
+                                            {<br>
+                                            "locId": ${locationData.locId},<br>
+                                            "name": "${locationData.name}"<br>
+                                            },<br>
+                                            "quota": ${data.quota}<br>
+                                            }`
+                                    res.status(200).type('text/plain').send(msg);
+                                }
+
+                            })
+                            .catch((err) => {
+                                res.status(500).type('text/plain').send(err);
+                            })
+                    }
+                })
+                .catch((err) => {
+                    res.status(500).type('text/plain').send(err);
+                })
     })
 
     app.all('/*', (req, res) => {
