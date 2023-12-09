@@ -113,16 +113,26 @@ db.once('open', function () {
                             if (!locationData) {
                                 res.status(404).type('text/plain').send(`Location not found`);
                             } else {
-                                let msg = `{<br>
-                                    "eventId": ${data.eventId},<br>
-                                    "name": "${data.name}",<br>
-                                    "loc":<br>
-                                    {<br>
-                                    "locId": ${locationData.locId},<br>
-                                    "name": "${locationData.name}"<br>
-                                    },<br>
-                                    "quota": ${data.quota}<br>
-                                    }`
+                                // let msg = `{<br>
+                                //     "eventId": ${data.eventId},<br>
+                                //     "name": "${data.name}",<br>
+                                //     "loc":<br>
+                                //     {<br>
+                                //     "locId": ${locationData.locId},<br>
+                                //     "name": "${locationData.name}"<br>
+                                //     },<br>
+                                //     "quota": ${data.quota}<br>
+                                //     }`
+                                let msg = `{
+"eventId": ${data.eventId},
+"name": "${data.name}",
+"loc":
+{
+"locId": ${locationData.locId},
+"name": "${locationData.name}"
+},
+"quota": ${data.quota}
+}`
                                 res.status(200).type('text/plain').send(msg);
                             }
                         })
@@ -163,7 +173,7 @@ db.once('open', function () {
                                 newEvent
                                     .save()
                                     .then(() => {
-                                        res.status(201).type('text/plain').send("A new event created successfully");
+                                        res.status(201).type('text/plain').send(`http://localhost:3000/ev/${eventId}`);
                                     })
                                     .catch((err) => {
                                         res.status(500).type('text/plain').send(err);
@@ -210,19 +220,28 @@ db.once('open', function () {
                                 if (!locationData) {
                                     throw new Error(`locId ${event.loc} does not exists`)
                                 }
-                                if (index != 0) {
-                                    msg += `,`;
-                                }
-                                msg += `<br>{<br>
-                                    "eventId": ${event.eventId},<br>
-                                    "name": "${event.name}",<br>
-                                    "loc":<br>
-                                    {<br>
-                                    "locId": ${locationData.locId},<br>
-                                    "name": "${locationData.name}"<br>
-                                    },<br>
-                                    "quota": ${event.quota}<br>
-                                    }<br>`;
+                                // msg += `<br>{<br>
+                                //     "eventId": ${event.eventId},<br>
+                                //     "name": "${event.name}",<br>
+                                //     "loc":<br>
+                                //     {<br>
+                                //     "locId": ${locationData.locId},<br>
+                                //     "name": "${locationData.name}"<br>
+                                //     },<br>
+                                //     "quota": ${event.quota}<br>
+                                //     }<br>`;
+                                msg += `
+{
+"eventId": ${event.eventId},
+"name": "${event.name}",
+"loc":
+{
+"locId": ${locationData.locId},
+"name": "${locationData.name}"
+},
+"quota": ${event.quota}
+},
+`;
                             })
                             .catch((err) => {
                                 throw (err);
@@ -251,11 +270,16 @@ db.once('open', function () {
                 if (!data) {
                     res.status(404).type('text/plain').send(`Location not found`);
                 } else {
-                    let msg = `{<br>
-                        "locId": ${data.locId},<br>
-                        "name": "${data.name}",<br>
-                        "quota": ${data.quota}<br>
-                        }`
+                    // let msg = `{<br>
+                    //     "locId": ${data.locId},<br>
+                    //     "name": "${data.name}",<br>
+                    //     "quota": ${data.quota}<br>
+                    //     }`
+                    let msg = `{
+"locId": ${data.locId},
+"name": "${data.name}",
+"quota": ${data.quota}
+}`
                     res.status(200).type('text/plain').send(msg);
                 }
             })
@@ -271,15 +295,13 @@ db.once('open', function () {
             .then((data) => {
                 let msg = `[`
                 const promises = data.map((event, index) => {
-                    if (index != 0) {
-                        msg += `,`;
-                    }
-                    msg += `<br>{<br>
-                        "locId": ${event.locId},<br>
-                        "name": "${event.name}"<br>
-                        "quota": ${event.quota}<br>
-                        }<br>`;
-
+                    msg += `
+{
+"locId": ${event.locId},
+"name": "${event.name}"
+"quota": ${event.quota}
+},
+`;
                 })
                 Promise.all(promises)
                     .then(() => {
@@ -310,19 +332,18 @@ db.once('open', function () {
                             if (!locationData) {
                                 throw new Error(`locId ${event.loc} does not exists`)
                             }
-                            if (index != 0) {
-                                msg += `,`;
-                            }
-                            msg += `<br>{<br>
-                                "eventId": ${event.eventId},<br>
-                                "name": "${event.name}",<br>
-                                "loc":<br>
-                                {<br>
-                                "locId": ${locationData.locId},<br>
-                                "name": "${locationData.name}"<br>
-                                },<br>
-                                "quota": ${event.quota}<br>
-                                }<br>`;
+                            msg += `
+{
+"eventId": ${event.eventId},
+"name": "${event.name}",
+"loc":
+{
+"locId": ${locationData.locId},
+"name": "${locationData.name}"
+},
+"quota": ${event.quota}
+},
+`;
                         })
                         .catch((err) => {
                             throw err;
@@ -354,17 +375,18 @@ db.once('open', function () {
                         req.body.loc = locationData._id;
                         Event.findOneAndUpdate({ eventId: { $eq: req.params.eventID } }, { $set: req.body }, { new: true })
                             .then((data) => {
-                                let msg = `{<br>
-                                        "eventId": ${data.eventId},<br>
-                                        "name": "${data.name}",<br>
-                                        "loc":<br>
-                                        {<br>
-                                        "locId": ${locationData.locId},<br>
-                                        "name": "${locationData.name}"<br>
-                                        },<br>
-                                        "quota": ${data.quota}<br>
-                                        }`
-                                res.status(200).type('text/plain').send(msg);
+                                // let msg = `{
+                                // "eventId": ${data.eventId},
+                                // "name": "${data.name}",
+                                // "loc":
+                                // {
+                                // "locId": ${locationData.locId},
+                                // "name": "${locationData.name}"
+                                // },
+                                // "quota": ${data.quota}
+                                // }`
+                                //                                 res.status(200).type('text/plain').send(msg);
+                                res.status(200).type('text/plain').send(`http://localhost:3000/ev/${data.eventId}`);
                             })
                             .catch((err) => {
                                 res.status(500).type('text/plain').send(err);
@@ -385,17 +407,18 @@ db.once('open', function () {
                                 if (!locationData) {
                                     res.status(404).type('text/plain').send(`Location not found`);
                                 } else {
-                                    let msg = `{<br>
-                                            "eventId": ${data.eventId},<br>
-                                            "name": "${data.name}",<br>
-                                            "loc":<br>
-                                            {<br>
-                                            "locId": ${locationData.locId},<br>
-                                            "name": "${locationData.name}"<br>
-                                            },<br>
-                                            "quota": ${data.quota}<br>
-                                            }`
-                                    res.status(200).type('text/plain').send(msg);
+                                    //                                     let msg = `{
+                                    // "eventId": ${data.eventId},
+                                    // "name": "${data.name}",
+                                    // "loc":
+                                    // {
+                                    // "locId": ${locationData.locId},
+                                    // "name": "${locationData.name}"
+                                    // },
+                                    // "quota": ${data.quota}
+                                    // }`
+                                    //                                     res.status(200).type('text/plain').send(msg);
+                                    res.status(200).type('text/plain').send(`http://localhost:3000/ev/${data.eventId}`);
                                 }
 
                             })

@@ -28,6 +28,8 @@ Date : 25/11/2023 -->
         <input type="submit" value="Submit">
     </form>
 
+    <a id="q2"></a>
+
     <hr>
 
     <p>Problem 3: POST to add event</p>
@@ -56,21 +58,29 @@ Date : 25/11/2023 -->
     <hr>
 
     <p>Problem 5: Some more queries</p>
-    <p>Q1: <button id="myGetAllEventButton">Get All Events</button></p>
+    <p>Q1: Get All Events
+        <!-- <button id="myGetAllEventButton">Get All Events</button> -->
+        <a id="q5_1" href="http://localhost:3000/ev">http://localhost:3000/ev</a>
+    </p>
     <p>Q2:
     <form id="myGetLocationForm">
         <label for="locationID">locationID:</label>
         <input type="text" id="locationID" name="locationID">
         <input type="submit" value="Submit">
     </form>
+    <a id="q5_2"></a>
     </p>
-    <p>Q3: <button id="myGetAllLocationButton">Get All Locations</button></p>
+    <p>Q3: Get All Locations
+        <!-- <button id="myGetAllLocationButton">Get All Locations</button> -->
+        <a id="q5_3" href="http://localhost:3000/lo">http://localhost:3000/lo</a>
+    </p>
     <p>Q4:
     <form id="myGetEventByQuotaForm">
         <label for="number">number:</label>
         <input type="number" id="number" name="number">
         <input type="submit" value="Submit">
     </form>
+    <a id="q5_4"></a>
     </p>
 
     <hr>
@@ -99,19 +109,26 @@ Date : 25/11/2023 -->
 
 
     <script>
+        // document.getElementById('myGetEventForm').addEventListener('submit', async (event) => {
+        //     event.preventDefault();
+        //     let eventID = document.getElementById('eventID').value;
+
+        //     let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
+        //         method: 'GET',
+        //     });
+
+        //     let resultPage = await response.text();
+        //     document.open();
+        //     document.write(resultPage);
+        //     document.close();
+        // });
         document.getElementById('myGetEventForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             let eventID = document.getElementById('eventID').value;
-
-            let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
-                method: 'GET',
-            });
-
-            let resultPage = await response.text();
-            document.open();
-            document.write(resultPage);
-            document.close();
+            document.getElementById('q2').innerText = `http://localhost:3000/ev/${eventID}`;
+            document.getElementById('q2').href = `http://localhost:3000/ev/${eventID}`;
         });
+
 
         document.getElementById('myForm').addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -157,53 +174,67 @@ Date : 25/11/2023 -->
             }
         });
 
-        document.getElementById('myGetAllEventButton').addEventListener('click', async (event) => {
-            let response = await fetch(`http://localhost:3000/ev`, {
-                method: 'GET',
-            });
+        // document.getElementById('myGetAllEventButton').addEventListener('click', async (event) => {
+        //     let response = await fetch(`http://localhost:3000/ev`, {
+        //         method: 'GET',
+        //     });
 
-            let resultPage = await response.text();
-            document.open();
-            document.write(resultPage);
-            document.close();
-        })
+        //     let resultPage = await response.text();
+        //     document.open();
+        //     document.write(resultPage);
+        //     document.close();
+        // })
+
+        // document.getElementById('myGetLocationForm').addEventListener('submit', async (event) => {
+        //     event.preventDefault();
+        //     let locationID = document.getElementById('locationID').value;
+
+        //     let response = await fetch(`http://localhost:3000/lo/${locationID}`, {
+        //         method: 'GET',
+        //     });
+
+        //     let resultPage = await response.text();
+        //     document.open();
+        //     document.write(resultPage);
+        //     document.close();
+        // });
 
         document.getElementById('myGetLocationForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             let locationID = document.getElementById('locationID').value;
-
-            let response = await fetch(`http://localhost:3000/lo/${locationID}`, {
-                method: 'GET',
-            });
-
-            let resultPage = await response.text();
-            document.open();
-            document.write(resultPage);
-            document.close();
+            document.getElementById('q5_2').innerText = `http://localhost:3000/lo/${locationID}`;
+            document.getElementById('q5_2').href = `http://localhost:3000/lo/${locationID}`;
         });
 
-        document.getElementById('myGetAllLocationButton').addEventListener('click', async (event) => {
-            let response = await fetch(`http://localhost:3000/lo`, {
-                method: 'GET',
-            });
+        // document.getElementById('myGetAllLocationButton').addEventListener('click', async (event) => {
+        //     let response = await fetch(`http://localhost:3000/lo`, {
+        //         method: 'GET',
+        //     });
 
-            let resultPage = await response.text();
-            document.open();
-            document.write(resultPage);
-            document.close();
-        })
+        //     let resultPage = await response.text();
+        //     document.open();
+        //     document.write(resultPage);
+        //     document.close();
+        // })
+
+        // document.getElementById('myGetEventByQuotaForm').addEventListener('submit', async (event) => {
+        //     event.preventDefault();
+        //     let number = document.getElementById('number').value;
+        //     let response = await fetch(`http://localhost:3000/ev?q=${encodeURIComponent(number)}`, {
+        //         method: 'GET',
+        //     });
+
+        //     let resultPage = await response.text();
+        //     document.open();
+        //     document.write(resultPage);
+        //     document.close();
+        // });
 
         document.getElementById('myGetEventByQuotaForm').addEventListener('submit', async (event) => {
             event.preventDefault();
             let number = document.getElementById('number').value;
-            let response = await fetch(`http://localhost:3000/ev?q=${encodeURIComponent(number)}`, {
-                method: 'GET',
-            });
-
-            let resultPage = await response.text();
-            document.open();
-            document.write(resultPage);
-            document.close();
+            document.getElementById('q5_4').innerText = `http://localhost:3000/ev?q=${encodeURIComponent(number)}`;
+            document.getElementById('q5_4').href = `http://localhost:3000/ev?q=${encodeURIComponent(number)}`;
         });
 
         document.getElementById('getToUpdate').addEventListener('submit', async (event) => {
@@ -235,7 +266,6 @@ Date : 25/11/2023 -->
             if (name) data.name = name;
             if (loc) data.loc = Number(loc);
             if (quota) data.quota = Number(quota);
-            console.log(data);
 
             let response = await fetch(`http://localhost:3000/ev/${eventID}`, {
                 method: 'PUT',
@@ -246,6 +276,7 @@ Date : 25/11/2023 -->
             });
 
             let resultPage = await response.text();
+            console.log(resultPage);
             console.log(resultPage);
             document.open();
             document.write(resultPage);
